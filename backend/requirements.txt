@@ -8,3 +8,4 @@ torchvision==0.21.0+cpu
 opencv-python-headless==4.11.0.86
 numpy==2.0.2
 openai
+python-dotenv

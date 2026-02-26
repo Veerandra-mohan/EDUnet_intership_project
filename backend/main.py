@@ -22,6 +22,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/")
+async def root():
+    return {"message": "Welcome to the DeepInspection API. Service is running!"}
+
 @app.post("/analyze-image")
 async def analyze_image(file: UploadFile = File(...), context: str = Form(...)):
     file_path = f"temp_{file.filename}"

@@ -25,7 +25,7 @@ export default function Reports() {
 
     const fetchReports = async () => {
         try {
-            const res = await fetch("http://127.0.0.1:8000/reports");
+            const res = await fetch("https://deep-inspection-backend.onrender.com/reports");
             const data = await res.json();
             setReports(data);
         } catch (error) {
@@ -37,7 +37,7 @@ export default function Reports() {
 
     const handleResolve = async (reportId: string) => {
         try {
-            await fetch(`http://127.0.0.1:8000/resolve-report/${reportId}`, {
+            await fetch(`https://deep-inspection-backend.onrender.com/resolve-report/${reportId}`, {
                 method: "POST"
             });
             // Update local state to reflect resolved

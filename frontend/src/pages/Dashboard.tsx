@@ -17,7 +17,7 @@ export default function Dashboard() {
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const res = await fetch("http://127.0.0.1:8000/dashboard-stats");
+                const res = await fetch("https://deep-inspection-backend.onrender.com/dashboard-stats");
                 const data = await res.json();
                 setStats(data);
             } catch (error) {

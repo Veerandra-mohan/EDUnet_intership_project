@@ -56,7 +56,7 @@ export default function Inspection() {
         formData.append("context", context);
 
         const isVideo = file.type.startsWith("video/");
-        const endpoint = isVideo ? "http://127.0.0.1:8000/analyze-video" : "http://127.0.0.1:8000/analyze-image";
+        const endpoint = isVideo ? "https://deep-inspection-backend.onrender.com/analyze-video" : "https://deep-inspection-backend.onrender.com/analyze-image";
 
         try {
             const response = await fetch(endpoint, {
@@ -84,7 +84,7 @@ export default function Inspection() {
         setChatLoading(true);
 
         try {
-            const response = await fetch("http://127.0.0.1:8000/chat", {
+            const response = await fetch("https://deep-inspection-backend.onrender.com/chat", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

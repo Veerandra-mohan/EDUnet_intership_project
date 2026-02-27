@@ -1,25 +1,24 @@
 import os
-from openai import OpenAI
+import google.generativeai as genai
 from dotenv import load_dotenv
 
 load_dotenv()
 
-api_key = os.getenv("OPENAI_API_KEY")
+api_key = os.getenv("GEMINI_API_KEY")
 
 if api_key:
-    client = OpenAI(api_key=api_key)
-else:
-    client = None
+    genai.configure(api_key=api_key)
 
 def generate_reasoning(report_data, chat_history, question, user_api_key=None):
     # Determine which key to use
     active_key = user_api_key if user_api_key else api_key
     
     if not active_key:
-        return "Warning: OPENAI_API_KEY is not provided. This is a mock response. The person is missing a hardhat (-30 pts) and safety vest (-20 pts)."
+        return "Warning: GEMINI_API_KEY is not provided. This is a mock response. The person is missing a hardhat (-30 pts) and safety vest (-20 pts)."
         
     try:
-        current_client = OpenAI(api_key=active_key)
+        genai.configure(api_key=active_key)
+        model = genai.GenerativeModel('gemini-1.5-flash')
     except Exception as e:
         return f"Error setting up AI Reasoning Engine: {str(e)}"
         
@@ -40,25 +39,17 @@ def generate_reasoning(report_data, chat_history, question, user_api_key=None):
     {report_data.get('scene_data', {})}
     """
     
-    messages = [
-        {"role": "system", "content": system_prompt}
-    ]
-    
+    prompt = system_prompt + "\n\nChat History:\n"
     for msg in chat_history[-5:]: # Keep last 5 for context limit
-        # Ensure role is 'user' or 'assistant'
         role = msg.get('role', 'user')
-        if role not in ['user', 'assistant', 'system']:
+        if role not in ['user', 'assistant']:
             role = 'user'
-        messages.append({"role": role, "content": msg.get('content', '')})
+        prompt += f"{role.capitalize()}: {msg.get('content', '')}\n"
         
-    messages.append({"role": "user", "content": question})
+    prompt += f"\nUser: {question}\nAssistant:"
     
     try:
-        response = current_client.chat.completions.create(
-            model="gpt-4o-mini", # or "gpt-3.5-turbo" if gpt-4o-mini is not available
-            messages=messages,
-            temperature=0.3
-        )
-        return response.choices[0].message.content
+        response = model.generate_content(prompt)
+        return response.text
     except Exception as e:
         return f"Error connecting to AI Reasoning Engine: {str(e)}"

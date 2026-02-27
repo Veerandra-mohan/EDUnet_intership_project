@@ -27,7 +27,7 @@ export default function OwlAssistant() {
     };
 
     return (
-        <div style={{ position: 'fixed', bottom: '-2rem', right: '-2rem', zIndex: 1000 }}>
+        <div style={{ position: 'fixed', bottom: '1rem', right: '1rem', zIndex: 1000 }}>
             {isOpen && (
                 <div className="card glow-card" style={{
                     position: 'absolute',
@@ -152,8 +152,8 @@ export default function OwlAssistant() {
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 style={{
-                    width: '14rem',
-                    height: '14rem',
+                    width: '8rem',
+                    height: '8rem',
                     borderRadius: '50%',
                     background: 'transparent',
                     color: 'white',

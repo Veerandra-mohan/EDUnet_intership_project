@@ -26,7 +26,7 @@ export default function Inspection() {
     const [chatInput, setChatInput] = useState("");
     const [chatHistory, setChatHistory] = useState<{ role: string, content: string }[]>([]);
     const [chatLoading, setChatLoading] = useState(false);
-    const [apiKey, setApiKey] = useState("");
+    const [apiKey, setApiKey] = useState("AIzaSyDpJia5xJ7gK3Y29AlvMIgCr2uuGPj0h7w");
 
     const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -244,7 +244,7 @@ export default function Inspection() {
                                 <input
                                     type="password"
                                     className="form-input"
-                                    placeholder="OpenAI API Key (Optional)"
+                                    placeholder="Gemini API Key (Optional)"
                                     value={apiKey}
                                     onChange={(e) => setApiKey(e.target.value)}
                                     style={{ width: '250px', fontSize: '0.85rem', padding: '0.4rem 0.8rem' }}

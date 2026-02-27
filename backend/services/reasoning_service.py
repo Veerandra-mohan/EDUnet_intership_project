@@ -18,7 +18,7 @@ def generate_reasoning(report_data, chat_history, question, user_api_key=None):
         
     try:
         genai.configure(api_key=active_key)
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        model = genai.GenerativeModel('gemini-pro')
     except Exception as e:
         return f"Error setting up AI Reasoning Engine: {str(e)}"
         

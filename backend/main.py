@@ -57,6 +57,7 @@ async def chat(request: ChatRequest):
     report_id = request.report_id
     question = request.question
     api_key = request.api_key
+    image_base64 = request.image
     
     report = get_report_by_id(report_id)
     if not report:
@@ -72,7 +73,8 @@ async def chat(request: ChatRequest):
         report_data=report,
         chat_history=chat_history,
         question=question,
-        user_api_key=api_key
+        user_api_key=api_key,
+        image_base64=image_base64
     )
     
     # Save the assistant's response

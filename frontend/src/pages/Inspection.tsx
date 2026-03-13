@@ -89,6 +89,15 @@ export default function Inspection() {
         setChatLoading(true);
 
         try {
+            let imageBase64 = undefined;
+            if (file && file.type.startsWith('image/')) {
+                imageBase64 = await new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => resolve(reader.result as string);
+                    reader.readAsDataURL(file);
+                });
+            }
+
             const response = await fetch("https://deep-inspection-backend.onrender.com/chat", {
                 method: "POST",
                 headers: {
@@ -97,7 +106,8 @@ export default function Inspection() {
                 body: JSON.stringify({
                     report_id: result.report_id,
                     question: question,
-                    api_key: apiKey || undefined
+                    api_key: apiKey || undefined,
+                    image: imageBase64
                 })
             });
 

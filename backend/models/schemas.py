@@ -22,3 +22,4 @@ class ChatRequest(BaseModel):
     report_id: str
     question: str
     api_key: Optional[str] = None
+    image: Optional[str] = None

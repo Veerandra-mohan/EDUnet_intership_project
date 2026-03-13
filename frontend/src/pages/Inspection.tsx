@@ -303,7 +303,9 @@ export default function Inspection() {
                                             padding: '0.75rem 1rem',
                                             borderRadius: '8px',
                                             border: msg.role === 'assistant' ? '1px solid var(--border-color)' : 'none',
-                                            maxWidth: '85%'
+                                            maxWidth: '85%',
+                                            wordBreak: 'break-word',
+                                            overflowWrap: 'break-word'
                                         }}>
                                             <p style={{ margin: 0, fontSize: '0.9rem', lineHeight: '1.4' }}>{msg.content}</p>
                                         </div>

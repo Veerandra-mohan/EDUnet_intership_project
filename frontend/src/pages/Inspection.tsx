@@ -26,7 +26,7 @@ export default function Inspection() {
     const [chatInput, setChatInput] = useState("");
     const [chatHistory, setChatHistory] = useState<{ role: string, content: string }[]>([]);
     const [chatLoading, setChatLoading] = useState(false);
-    const [apiKey, setApiKey] = useState("AIzaSyDpJia5xJ7gK3Y29AlvMIgCr2uuGPj0h7w");
+    const [apiKey, setApiKey] = useState<string>(localStorage.getItem("gemini_api_key") || "");
 
     const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -77,6 +77,11 @@ export default function Inspection() {
 
     const handleSendMessage = async () => {
         if (!chatInput.trim() || !result?.report_id || chatLoading) return;
+
+        if (!apiKey.trim()) {
+            setChatHistory(prev => [...prev, { role: "assistant", content: "Chat Error: Please add your API key in settings." }]);
+            return;
+        }
 
         const question = chatInput.trim();
         setChatInput("");
@@ -241,14 +246,25 @@ export default function Inspection() {
                                     <MessageSquare size={20} color="var(--accent-color)" />
                                     <h3 style={{ margin: 0 }}>Ask Inspector</h3>
                                 </div>
-                                <input
-                                    type="password"
-                                    className="form-input"
-                                    placeholder="Gemini API Key (Optional)"
-                                    value={apiKey}
-                                    onChange={(e) => setApiKey(e.target.value)}
-                                    style={{ width: '250px', fontSize: '0.85rem', padding: '0.4rem 0.8rem' }}
-                                />
+                                <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                                    <input
+                                        type="password"
+                                        className="form-input"
+                                        placeholder="Paste Gemini API Key"
+                                        value={apiKey}
+                                        onChange={(e) => setApiKey(e.target.value)}
+                                        style={{ width: '200px', fontSize: '0.85rem', padding: '0.4rem 0.8rem' }}
+                                    />
+                                    <button
+                                        className="auth-btn"
+                                        style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                                        onClick={() => {
+                                            localStorage.setItem("gemini_api_key", apiKey.trim());
+                                        }}
+                                    >
+                                        Save
+                                    </button>
+                                </div>
                             </div>
 
                             <div style={{
